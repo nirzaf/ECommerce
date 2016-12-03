@@ -1986,7 +1986,8 @@ namespace Grand.Admin.Controllers
             else
             {
                 //adjust inventory
-                _productService.AdjustInventory(product, orderItem.Quantity, orderItem.AttributesXml);
+                if (product != null)
+                    _productService.AdjustInventory(product, orderItem.Quantity, orderItem.AttributesXml);
                 _orderService.DeleteOrderItem(orderItem);
             }
 
@@ -3261,7 +3262,8 @@ namespace Grand.Admin.Controllers
             {
                 var product = _productService.GetProductById(shipmentItem.ProductId);
                 shipmentItem.ShipmentId = shipment.Id;
-                _productService.ReverseBookedInventory(product, shipmentItem);
+                if(product!=null)
+                    _productService.ReverseBookedInventory(product, shipmentItem);
             }
 
             _shipmentService.DeleteShipment(shipment);
