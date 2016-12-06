@@ -774,7 +774,8 @@ namespace Grand.Web.Controllers
                     _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.PasswordRecoveryToken, passwordRecoveryToken.ToString());
                     DateTime? generatedDateTime = DateTime.UtcNow;
                     _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.PasswordRecoveryTokenDateGenerated, generatedDateTime);
-                    _workContext.CurrentCustomer.GenericAttributes = _customerService.GetCustomerById(_workContext.CurrentCustomer.Id).GenericAttributes;
+                    customer = _customerService.GetCustomerById(_workContext.CurrentCustomer.Id);
+                    _workContext.CurrentCustomer.GenericAttributes = customer.GenericAttributes;
 
                     //send email
                     _workflowMessageService.SendCustomerPasswordRecoveryMessage(customer, _workContext.WorkingLanguage.Id);
