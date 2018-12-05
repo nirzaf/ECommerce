@@ -8,6 +8,7 @@ using Grand.Services.Stores;
 using Grand.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Grand.Web.Components
 {
@@ -45,12 +46,12 @@ namespace Grand.Web.Components
 
         #region Invoker
 
-        public IViewComponentResult Invoke(int? productThumbPictureSize)
+        public async Task<IViewComponentResult> InvokeAsync(int? productThumbPictureSize)
         {
             if (!_catalogSettings.RecommendedProductsEnabled)
                 return Content("");
 
-            var products = _productService.GetRecommendedProducts(_workContext.CurrentCustomer.GetCustomerRoleIds());
+            var products = await Task.Run(() => _productService.GetRecommendedProducts(_workContext.CurrentCustomer.GetCustomerRoleIds()));
 
             //ACL and store mapping
             products = products.Where(p => _aclService.Authorize(p) && _storeMappingService.Authorize(p)).ToList();

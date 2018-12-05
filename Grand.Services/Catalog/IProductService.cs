@@ -4,6 +4,7 @@ using Grand.Core.Domain.Orders;
 using Grand.Core.Domain.Shipping;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Grand.Services.Catalog
 {
@@ -24,7 +25,7 @@ namespace Grand.Services.Catalog
         /// Gets all products displayed on the home page
         /// </summary>
         /// <returns>Products</returns>
-        IList<Product> GetAllProductsDisplayedOnHomePage();
+        Task<List<Product>> GetAllProductsDisplayedOnHomePage();
 
         /// <summary>
         /// Gets recommended products for customer roles

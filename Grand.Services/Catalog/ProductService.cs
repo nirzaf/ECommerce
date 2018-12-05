@@ -226,15 +226,14 @@ namespace Grand.Services.Catalog
         /// Gets all products displayed on the home page
         /// </summary>
         /// <returns>Products</returns>
-        public virtual IList<Product> GetAllProductsDisplayedOnHomePage()
+        public virtual Task<List<Product>> GetAllProductsDisplayedOnHomePage()
         {            
             var builder = Builders<Product>.Filter;
             var filter = builder.Eq(x => x.Published, true);
             filter = filter & builder.Eq(x => x.ShowOnHomePage, true);
             filter = filter & builder.Eq(x => x.VisibleIndividually, true);
             var query = _productRepository.Collection.Find(filter).SortBy(x => x.DisplayOrder).ThenBy(x=>x.Name);
-            var products = query.ToList();
-            return products;
+            return query.ToListAsync();
         }
 
         /// <summary>

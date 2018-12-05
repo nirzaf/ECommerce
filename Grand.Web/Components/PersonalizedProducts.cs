@@ -7,6 +7,7 @@ using Grand.Services.Stores;
 using Grand.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Grand.Web.Components
 {
@@ -44,13 +45,13 @@ namespace Grand.Web.Components
 
         #region Invoker
 
-        public IViewComponentResult Invoke(int? productThumbPictureSize)
+        public async Task<IViewComponentResult> InvokeAsync(int? productThumbPictureSize)
         {
             if (!_catalogSettings.PersonalizedProductsEnabled || _catalogSettings.PersonalizedProductsNumber == 0)
                 return Content("");
 
             var customer = _workContext.CurrentCustomer;
-            var products = _productService.GetPersonalizedProducts(customer.Id);
+            var products = await Task.Run(() => _productService.GetPersonalizedProducts(customer.Id));
 
             //ACL and store mapping
             products = products.Where(p => _aclService.Authorize(p, customer) && _storeMappingService.Authorize(p)).ToList();

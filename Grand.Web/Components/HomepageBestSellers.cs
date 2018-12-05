@@ -10,6 +10,7 @@ using Grand.Web.Infrastructure.Cache;
 using Grand.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Grand.Web.Components
 {
@@ -53,7 +54,7 @@ namespace Grand.Web.Components
 
         #region Invoker
 
-        public IViewComponentResult Invoke(int? productThumbPictureSize)
+        public async Task<IViewComponentResult> InvokeAsync(int? productThumbPictureSize)
         {
             if (!_catalogSettings.ShowBestsellersOnHomepage || _catalogSettings.NumberOfBestsellersOnHomepage == 0)
                 return Content("");
@@ -65,9 +66,8 @@ namespace Grand.Web.Components
                         pageSize: _catalogSettings.NumberOfBestsellersOnHomepage)
                         .ToList());
 
-
             //load products
-            var products = _productService.GetProductsByIds(report.Select(x => x.ProductId).ToArray());
+            var products = await Task.Run(() => _productService.GetProductsByIds(report.Select(x => x.ProductId).ToArray()));
             //ACL and store mapping
             products = products.Where(p => _aclService.Authorize(p) && _storeMappingService.Authorize(p)).ToList();
             //availability dates

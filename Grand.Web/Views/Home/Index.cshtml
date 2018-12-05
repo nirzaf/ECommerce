@@ -3,29 +3,54 @@
 }
 <div class="page home-page">
     <div class="page home-page">
-        @await Component.InvokeAsync("PushNotificationsRegistration")
-        @await Component.InvokeAsync("Widget", new { widgetZone = "home_page_top" })
-        @await Component.InvokeAsync("TopicBlock", new { systemName = "HomePageText" })
-        @await Component.InvokeAsync("Widget", new { widgetZone = "home_page_before_categories" })
-        @await Component.InvokeAsync("HomePageCategories")
-        @await Component.InvokeAsync("Widget", new { widgetZone = "home_page_before_products" })
-        @await Component.InvokeAsync("PersonalizedProducts")
-        @await Component.InvokeAsync("RecommendedProducts")
-        @await Component.InvokeAsync("SuggestedProducts")
-        @await Component.InvokeAsync("HomePageProducts")
-        @await Component.InvokeAsync("CategoryFeaturedProducts")
-        @await Component.InvokeAsync("Widget", new { widgetZone = "home_page_before_best_sellers" })
-        @await Component.InvokeAsync("HomePageBestSellers")
-        @await Component.InvokeAsync("Widget", new { widgetZone = "home_page_before_manufacturers" })
-        @await Component.InvokeAsync("HomePageManufacturers")
-        @await Component.InvokeAsync("ManufacturerFeaturedProducts")
-        @await Component.InvokeAsync("Widget", new { widgetZone = "home_page_before_news" })
-        @await Component.InvokeAsync("HomePageNews")
-        @await Component.InvokeAsync("Widget", new { widgetZone = "home_page_before_blog" })
-        @await Component.InvokeAsync("HomePageBlog")
-        @await Component.InvokeAsync("Widget", new { widgetZone = "home_page_before_poll" })
-        @await Component.InvokeAsync("HomePagePolls")
-        @await Component.InvokeAsync("Widget", new { widgetZone = "home_page_bottom" })
+        @{
+            var homepageproduct = Component.InvokeAsync("HomePageProducts");
+            var homepagenews = Component.InvokeAsync("HomePageNews");
+            var homePageManufacturers = Component.InvokeAsync("HomePageManufacturers");
+            var homePageCategories = Component.InvokeAsync("HomePageCategories");
+            var pushNotificationsRegistration = Component.InvokeAsync("PushNotificationsRegistration");
+            var homepagetop = Component.InvokeAsync("Widget", new { widgetZone = "home_page_top" });
+            var homePageText = Component.InvokeAsync("TopicBlock", new { systemName = "HomePageText" });
+            var home_page_before_categories = Component.InvokeAsync("Widget", new { widgetZone = "home_page_before_categories" });
+            var home_page_before_products = Component.InvokeAsync("Widget", new { widgetZone = "home_page_before_products" });
+            var home_page_before_best_sellers = Component.InvokeAsync("Widget", new { widgetZone = "home_page_before_best_sellers" });
+            var home_page_before_manufacturers = Component.InvokeAsync("Widget", new { widgetZone = "home_page_before_manufacturers" });
+            var home_page_before_news = Component.InvokeAsync("Widget", new { widgetZone = "home_page_before_news" });
+            var home_page_before_blog = Component.InvokeAsync("Widget", new { widgetZone = "home_page_before_blog" });
+            var home_page_before_poll = Component.InvokeAsync("Widget", new { widgetZone = "home_page_before_poll" });
+            var home_page_bottom = Component.InvokeAsync("Widget", new { widgetZone = "home_page_bottom" });
+            var personalizedProducts = Component.InvokeAsync("PersonalizedProducts");
+            var recommendedProducts = Component.InvokeAsync("RecommendedProducts");
+            var suggestedProducts = Component.InvokeAsync("SuggestedProducts");
+            var categoryFeaturedProducts = Component.InvokeAsync("CategoryFeaturedProducts");
+            var homePageBestSellers = Component.InvokeAsync("HomePageBestSellers");
+            var manufacturerFeaturedProducts = Component.InvokeAsync("ManufacturerFeaturedProducts");
+            var homePageBlog = Component.InvokeAsync("HomePageBlog");
+            var homePagePolls = Component.InvokeAsync("HomePagePolls");
+        }
+        @await pushNotificationsRegistration
+        @await homepagetop
+        @await homePageText
+        @await home_page_before_categories
+        @await homePageCategories
+        @await home_page_before_products
+        @await personalizedProducts
+        @await recommendedProducts
+        @await suggestedProducts
+        @await homepageproduct
+        @await categoryFeaturedProducts
+        @await home_page_before_best_sellers
+        @await homePageBestSellers
+        @await home_page_before_manufacturers
+        @await homePageManufacturers
+        @await manufacturerFeaturedProducts
+        @await home_page_before_news
+        @await homepagenews
+        @await home_page_before_blog
+        @await homePageBlog
+        @await home_page_before_poll
+        @await homePagePolls
+        @await home_page_bottom
     </div>
- 
+
 </div>

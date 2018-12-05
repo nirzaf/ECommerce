@@ -4,6 +4,7 @@ using Grand.Core.Domain.PushNotifications;
 using Grand.Framework.Components;
 using Grand.Web.Models.PushNotifications;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Grand.Web.Components
 {
@@ -18,15 +19,20 @@ namespace Grand.Web.Components
             _workContext = workContext;
         }
 
-        public IViewComponentResult Invoke(string widgetZone, object additionalData)
+        public async Task<IViewComponentResult> InvokeAsync()
         {
-            var model = new PublicInfoModel();
-            model.PublicApiKey = _pushNotificationsSettings.PublicApiKey;
-            model.SenderId = _pushNotificationsSettings.SenderId;
-            model.AuthDomain = _pushNotificationsSettings.AuthDomain;
-            model.ProjectId = _pushNotificationsSettings.ProjectId;
-            model.StorageBucket = _pushNotificationsSettings.StorageBucket;
-            model.DatabaseUrl = _pushNotificationsSettings.DatabaseUrl;
+            var model =
+                await Task.Run(() =>
+                {
+                    var publicInfoModel = new PublicInfoModel();
+                    publicInfoModel.PublicApiKey = _pushNotificationsSettings.PublicApiKey;
+                    publicInfoModel.SenderId = _pushNotificationsSettings.SenderId;
+                    publicInfoModel.AuthDomain = _pushNotificationsSettings.AuthDomain;
+                    publicInfoModel.ProjectId = _pushNotificationsSettings.ProjectId;
+                    publicInfoModel.StorageBucket = _pushNotificationsSettings.StorageBucket;
+                    publicInfoModel.DatabaseUrl = _pushNotificationsSettings.DatabaseUrl;
+                    return publicInfoModel;
+                });
             if (_pushNotificationsSettings.Enabled)
             {
                 if (!_pushNotificationsSettings.AllowGuestNotifications && _workContext.CurrentCustomer.IsGuest())
